@@ -2,7 +2,7 @@ FROM rust:latest AS builder
 WORKDIR /app
 RUN apt-get update && apt-get install -y protobuf-compiler && rm -rf /var/lib/apt/lists/*
 COPY . .
-RUN cargo build --release -p {{ prefix_name }}_{{ suffix_name }}_bin
+RUN cargo build --release -p {{ project_name }}_bin
 
 FROM debian:bookworm-slim
 WORKDIR /app
