@@ -34,6 +34,10 @@ local VARIANTS = {
     cache = "Redis",
     messaging = "Kafka",
     messaging_access = "consume",
+    -- Deliberately unlike the defaults AND unlike what the greenfield archetype produces, so the
+    -- container build can only pass by actually reading the answers.
+    build_command = "just release-build",
+    runtime_artifact = "legacy-daemon",
   },
 }
 
@@ -49,6 +53,8 @@ for i, v in ipairs(VARIANTS) do
     cache = v.cache,
     messaging = v.messaging,
     messaging_access = v.messaging_access,
+    build_command = v.build_command,
+    runtime_artifact = v.runtime_artifact,
     -- this overlay also carries a Tilt inner loop
     extras = { "Tiltfile" },
   }
