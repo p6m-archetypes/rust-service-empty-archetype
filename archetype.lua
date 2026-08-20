@@ -25,12 +25,11 @@ context:page({ title = "Project", key = "project",
         -- which is what lets Shared resources be shared across a solution and environment.
         identity.prompt_solution(ctx)
 
-        -- Where CI publishes the image to. No default — registry hostnames are company-specific.
-        ctx:prompt_text("Image Registry:", "image_registry", {
-            placeholder = "ghcr.io",
-            help        = "Container image registry hostname (e.g. ghcr.io, "
-                .. "123456789.dkr.ecr.us-east-1.amazonaws.com).",
-        })
+        -- The registry prompt comes from the manifests library, the same as every other shape.
+        -- It used to be a second copy here, and the copies drifted: this one carried a `ghcr.io`
+        -- placeholder while the library's said `registry.example.com`, so a placeholder-driven
+        -- form filler produced different values for the same field depending on the flavor.
+        require("platform-application-manifests").prompt_registry(ctx)
     end)
 
     ctx:section({ title = "Service", key = "service",
