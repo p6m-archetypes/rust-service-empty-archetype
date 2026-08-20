@@ -1,6 +1,6 @@
 # rust-service-empty-archetype
 
-Rust **Service Platform Overlay** — generates only the platform *servicing layer* for a
+Rust **Retrofit Overlay** — generates only the platform *servicing layer* for a
 service and nothing else. Run it against an **existing** Rust project to retrofit it with:
 
 - `.github/workflows/` — CI build + cut-tag (`rust-ci`)
