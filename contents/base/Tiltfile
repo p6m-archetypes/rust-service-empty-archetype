@@ -1,0 +1,24 @@
+# -*- mode: Python -*-
+
+SERVICE_NAME = '{{ project-name }}'
+SERVICE_PORT = {{ service_port }}
+MANAGEMENT_PORT = {{ management_port }}
+
+docker_build(
+    SERVICE_NAME,
+    '.',
+    dockerfile='.platform/docker/local/Dockerfile',
+    live_update=[
+        sync('./target', '/app/target'),
+    ],
+)
+
+k8s_yaml(kustomize('.platform/kubernetes/dev'))
+
+k8s_resource(
+    SERVICE_NAME,
+    port_forwards=[
+        port_forward(SERVICE_PORT, SERVICE_PORT, name='HTTP'),
+        port_forward(MANAGEMENT_PORT, MANAGEMENT_PORT, name='Management'),
+    ],
+)
